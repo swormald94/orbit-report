@@ -7,24 +7,21 @@ import { Satellite } from '../satellite';
   styleUrls: ['./orbit-list.component.css']
 })
 export class OrbitListComponent implements OnInit {
-  warning: boolean = false;
-
   @Input() satellites?: Satellite[];
   constructor() {
   }
 
   ngOnInit(): void {
   }
-
-  shouldShowWarning = function (this: any) {
-    for (let i = 0; i < this.sourceList.length; i++) {
-      if (this.sourceList[i].type === 'Space Debris') {
-        this.warning = true;
-      } else {
-        this.warning = false;
+  sort(this: any, column: string): void {
+    // array.sort modifies the array, sorting the items based on the given compare function
+    this.satellites.sort(function (a: any, b: any): number {
+      if (a[column] < b[column]) {
+        return -1;
+      } else if (a[column] > b[column]) {
+        return 1;
       }
-    }
-    return this.warning;
+      return 0;
+    });
   }
-
 }
